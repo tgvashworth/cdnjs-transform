@@ -60,6 +60,7 @@ var processAssetFiles = function (package, memo, asset) {
     // If this is a new package, add the skeleton object
     if (!memo[name]) memo[name] = {
       root: package.name,
+      version: package.version,
       files: {
         default: filename
       },
