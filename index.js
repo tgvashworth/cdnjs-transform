@@ -87,6 +87,15 @@ var extractAssets = function (memo, package) {
   return package.assets.reduce(processAssetFiles.bind(null, package), memo);
 };
 
-module.exports = function (packages) {
+var processPackages =  function (packages) {
   return packages.filter(hasFilename).filter(isJS).reduce(extractAssets, {});
+}
+
+module.exports = function (packages) {
+  var assets = processPackages(packages);
+  return Object.keys(assets).map(function (name) {
+    return _.extend(assets[name], {
+      name: name
+    });
+  });
 };
