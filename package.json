@@ -1,6 +1,6 @@
 {
   "name": "cdnjs-transform",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Extract assets to make CDNjs's packages useful.",
   "main": "index.js",
   "repository": "",
