@@ -24,7 +24,7 @@ var isFoldered = function (package) {
 };
 
 var nameMatchesPackageName = function (name, packageName) {
-  return name.indexOf(packageName) !== -1;
+  return name.toLowerCase().indexOf(packageName.toLowerCase()) !== -1;
 };
 
 var fileType = function (filename) {
@@ -39,12 +39,10 @@ var hasFilename = function (package) {
 };
 
 var extractName = function (filename) {
-  return filename.replace(/([.-]min)?\.js$/, '')
+  return filename.replace(/([.-]min)?\.js$/, '');
 };
 
 var processAssetFiles = function (package, memo, asset) {
-  // Don't allow invalidly semver'd packages in
-  if (!semver.valid(asset.version)) return memo;
   return asset.files.reduce(function (memo, filename) {
     // Not Javascript? No thanks.
     if (!isJS({ filename: filename })) return memo;
@@ -90,7 +88,7 @@ var extractAssets = function (memo, package) {
 
 var processPackages =  function (packages) {
   return packages.filter(hasFilename).filter(isJS).reduce(extractAssets, {});
-}
+};
 
 module.exports = function (packages) {
   var assets = processPackages(packages);
