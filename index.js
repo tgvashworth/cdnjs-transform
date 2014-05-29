@@ -16,13 +16,9 @@ var tmplt = function (str, o) {
  * others just have a string
  */
 var getFileName = function(package) {
-  if(_.isString(package)) {
-    return package;
-  } else if(_.isString(package.filename)) {
-    return package.filename;
-  } else {
-    return package.filename.name;
-  }
+  if (_.isString(package)) return package;
+  if (_.isString(package.filename)) return package.filename;
+  return package.filename.name;
 }
 
 /**
