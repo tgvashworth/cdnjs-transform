@@ -10,17 +10,28 @@ var tmplt = function (str, o) {
   );
 };
 
+
+/**
+ * some items in CDNJS have filenames as an object,
+ * others just have a string
+ */
+var getFileName = function(package) {
+  if (_.isString(package)) return package;
+  if (_.isString(package.filename)) return package.filename;
+  return package.filename.name;
+}
+
 /**
  * Determine if a package is a JS or CSS package
  */
 var isJS = function (package) {
-  return package.filename.match(/\.js$/i);
+  return getFileName(package).match(/\.js$/i);
 };
 var isCSS = function (package) {
-  return package.filename.match(/\.css$/i);
+  return getFileName(package).match(/\.css$/i);
 };
 var isFoldered = function (package) {
-  return package.filename.match(/\//);
+  return getFileName(package).match(/\//);
 };
 
 var nameMatchesPackageName = function (name, packageName) {
@@ -44,6 +55,8 @@ var extractName = function (filename) {
 
 var processAssetFiles = function (package, memo, asset) {
   return asset.files.reduce(function (memo, filename) {
+    filename = _.isString(filename) ? filename : filename.name;
+
     // Not Javascript? No thanks.
     if (!isJS({ filename: filename })) return memo;
     // In a folder? No thanks. We might support this stuff in future, but right
