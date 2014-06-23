@@ -80,11 +80,8 @@ var processAssetFiles = function (package, memo, asset) {
     // If multiple libraries specific the same file, this will throw. Again,
     // this is weird dependency shit.
     if (package.name !== memo[name].root) {
-      throw new Error(tmplt("Conflicted '{asset}'. '{package}' != '{root}'.", {
-        asset: filename,
-        package: package.name,
-        root: memo[name].root
-      }));
+      delete memo[name];
+      return memo;
     }
     // Figure out what kind of file this is and add it. This could be extended
     // later for other kinds of files.
